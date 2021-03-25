@@ -1,0 +1,16 @@
+{
+    "name": "wolfe/school-project-6-gamemarket",
+    "description": "Game exchange webmarket",
+    "authors": [
+        {
+            "name": "Maxime Lassiaz",
+            "email": "maxime.lassiaz@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "app\\" : "./"
+        }
+    },
+    "require": {}
+}
