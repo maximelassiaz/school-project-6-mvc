@@ -2,14 +2,22 @@
 
     namespace app;
 
+    use app\models\Database;
+    use app\models\ProductManager;
+    use app\models\UserManager;
+
     class Router {
 
         public array $getRoutes = [];
         public array $postRoutes = [];
         public Database $db;
+        public ProductManager $productManager;
+        public UserManager $userManager;
 
         public function __construct() {
             $this->db = new Database();
+            $this->productManager = new ProductManager();
+            $this->userManager = new UserManager();
         }
 
         public function get($url, $fn) {
