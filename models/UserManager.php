@@ -47,18 +47,21 @@
 
         public function loginUser(User $user) {
             $sql = "SELECT * FROM user
-                    WHERE user_email = :user_email
-                    AND user_password = :user_password";
+                    WHERE user_email = :user_email";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindValue(":user_email", $user->email);
-            $stmt->bindValue(":user_password", $user->password);
             $stmt->execute();
             $count = $stmt->rowCount();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($count < 1) {
                 header("Location: /user/login?error=login");
                 exit();
             }
-            return $stmt->fetch(PDO::FETCH_ASSOC); 
+            if (!password_verify($user->password,$row['user_password'])){
+                header("Location: /user/login?error=login");
+                exit();
+            }
+            return $row; 
         }
 
         public function createUser(User $user) {
@@ -68,7 +71,7 @@
             $stmt->bindValue(":user_fname", $user->fname);
             $stmt->bindValue(":user_lname", $user->lname);
             $stmt->bindValue(":user_email", $user->email);
-            $stmt->bindValue(":user_password", $user->password);
+            $stmt->bindValue(":user_password", password_hash($user->password, PASSWORD_DEFAULT));
             $stmt->bindValue(":user_username", $user->username);
             $stmt->execute();
         }
@@ -79,18 +82,24 @@
                     user_lname = :user_lname,
                     user_email = :user_email,
                     user_password = :user_password,
-                    user_username = :user_username,
-                    WHERE product_id = :product_id";
+                    user_username = :user_username
+                    WHERE user_id = :user_id";
            $stmt = $this->conn->prepare($sql);
            $stmt->bindValue(":user_fname", $user->fname);
            $stmt->bindValue(":user_lname", $user->lname);
            $stmt->bindValue(":user_email", $user->email);
-           $stmt->bindValue(":user_password", $user->password);
+           $stmt->bindValue(":user_password", password_hash($user->password, PASSWORD_DEFAULT));
            $stmt->bindValue(":user_username", $user->username);
+           $stmt->bindValue(":user_id", $user->id);
            $stmt->execute();
         }
 
         public function deleteUser($id) {
+            $sql = "DELETE FROM product
+                    WHERE id_product_user = :id_product_user";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindValue(":id_product_user", $id);
+            $stmt->execute();
             $sql = "DELETE FROM user
                     WHERE user_id = :user_id";
             $stmt = $this->conn->prepare($sql);

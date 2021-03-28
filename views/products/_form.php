@@ -36,7 +36,7 @@
     <div class="form-group col-6">
     <label for="product-region">Region</label>
         <select class="form-control" id="product-region" name="product-region">
-            <option value="<?= htmlspecialchars($product['product_region_id']) ;?>"><?= $product['product_region_name'] ? htmlspecialchars($product['product_region_name']) : "Choose a region" ;?></option>
+            <option value="<?= isset($product['regon_id']) ? htmlspecialchars($product['region_id']) : "";?>"><?= isset($product['region_name']) ? htmlspecialchars($product['region_name']) : "Choose a region" ;?></option>
             <option value="1">East Midlands</option>
             <option value="2">East of England</option>
             <option value="3">London</option>
@@ -51,7 +51,7 @@
     <div class="form-group col-6">
     <label for="product-category">Category</label>
         <select class="form-control" id="product-category" name="product-category">
-            <option value="<?= htmlspecialchars($product['product_category_id']);?>"><?= $product['product_category_name'] ? htmlspecialchars($product['product_category_name']) : "Choose a category" ;?></option>
+            <option value="<?= isset($product['category_id']) ? htmlspecialchars($product['category_id']) : "";?>"><?= isset($product['category_name']) ? htmlspecialchars($product['category_name']) : "Choose a category" ;?></option>
             <?php // TODO : take category object to create it dynamically ?>
             <option value="1">Playstation 4</option>
             <option value="2">Playstation 5</option>

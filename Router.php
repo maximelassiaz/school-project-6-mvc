@@ -5,6 +5,9 @@
     use app\models\Database;
     use app\models\ProductManager;
     use app\models\UserManager;
+    use app\models\AdminManager;
+    use app\models\CategoryManager;
+    use app\models\RegionManager;
 
     class Router {
 
@@ -13,11 +16,17 @@
         public Database $db;
         public ProductManager $productManager;
         public UserManager $userManager;
+        public AdminManager $adminManager;
+        public CategoryManager $categoryManager;
+        public RegionManager $regionManager;
 
         public function __construct() {
             $this->db = new Database();
             $this->productManager = new ProductManager();
             $this->userManager = new UserManager();
+            $this->adminManager = new AdminManager();
+            $this->categoryManager = new CategoryManager();
+            $this->regionManager = new RegionManager();
         }
 
         public function get($url, $fn) {

@@ -17,13 +17,14 @@
         }
 
          // get all products matching the search expression, or all products if no search is made
-         public function getProducts($search = "") {
+         public function getProducts($search = []) {
             if ($search) {
                 $sql = "SELECT * FROM product
                         INNER JOIN category ON product.id_product_category = category.category_id
                         INNER JOIN region ON product.id_product_region = region.region_id
                         INNER JOIN user ON product.id_product_user = user.user_id
-                        WHERE product_title LIKE :search ORDER BY product_id DESC";
+                        WHERE product_title LIKE :search
+                        ORDER BY product_id DESC";
                 $stmt = $this->conn->prepare($sql);
                 $stmt->bindValue(":search", "%$search%", PDO::PARAM_STR);
             } else {
@@ -51,25 +52,29 @@
             return $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
-        // public function getProductByUserId($id) {
-        //     $sql = "SELECT * FROM product
-        //             INNER JOIN category ON product.id_product_category = category.category_id
-        //             INNER JOIN region ON product.id_product_region = region.region_id
-        //             INNER JOIN user ON product.id_product_user = user.user_id
-        //             WHERE user.user_id = :user_id";
-        //     $stmt = $this->conn->prepare($sql);
-        //     $stmt->bindValue(":user_id", $id);
-        //     $stmt->execute();
-        //     return $stmt->fetch(PDO::FETCH_ASSOC);
-        // }
+        public function getProductsByUserId($id) {
+            $sql = "SELECT * FROM product
+                    INNER JOIN category ON product.id_product_category = category.category_id
+                    INNER JOIN region ON product.id_product_region = region.region_id
+                    INNER JOIN user ON product.id_product_user = user.user_id
+                    WHERE user.user_id = :user_id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindValue(":user_id", $id);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
 
         public function createProduct(Product $product) {
-            $sql = "INSERT INTO product (product_title, product_description, product_image, product_price, id_product_category, id_product_region, id_product_user)
-                    VALUES (:product_title, :product_description, :product_image, :product_price, :id_product_category, :id_product_region, :id_product_user)";
+            $imgQuery = $product->imageName ? " product_image, " : "";
+            $imgValue = $product->imageName ? " :product_image, " : "";
+            $sql = "INSERT INTO product (product_title, product_description, $imgQuery product_price, id_product_category, id_product_region, id_product_user)
+                    VALUES (:product_title, :product_description, $imgValue :product_price, :id_product_category, :id_product_region, :id_product_user)";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindValue(":product_title", $product->title);
             $stmt->bindValue(":product_description", $product->description);
-            $stmt->bindValue(":product_image", $product->imageName);
+            if ($product->imageName) {
+                $stmt->bindValue(":product_image", $product->imageName);
+            } 
             $stmt->bindValue(":product_price", $product->price);
             $stmt->bindValue(":id_product_category", $product->categoryId);
             $stmt->bindValue(":id_product_region", $product->regionId);
@@ -78,10 +83,20 @@
         }
 
         public function updateProduct(Product $product) {
+            $user_id = $_SESSION['user']['user_id'] ?? null;
+            if (!$user_id) {
+                header("Location: /products");
+                exit();
+            }
+            if ($user_id != $product->userId) {
+                header("Location: /products/user");
+                exit();
+            }
+            $imgQuery = $product->imageName ? " product_image = :product_image," : "";
             $sql = "UPDATE product
                     SET product_title = :product_title,
                     product_description = :product_description,
-                    product_image = :product_image,
+                    $imgQuery 
                     product_price = :product_price,
                     id_product_category = :id_product_category,
                     id_product_region = :id_product_region,
@@ -90,7 +105,9 @@
             $stmt = $this->conn->prepare($sql);
             $stmt->bindValue(":product_title", $product->title);
             $stmt->bindValue(":product_description", $product->description);
-            $stmt->bindValue(":product_image", $product->imageName);
+            if ($product->imageName) {
+                $stmt->bindValue(":product_image", $product->imageName);
+            } 
             $stmt->bindValue(":product_price", $product->price);
             $stmt->bindValue(":id_product_category", $product->categoryId);
             $stmt->bindValue(":id_product_region", $product->regionId);
@@ -100,10 +117,24 @@
         }
 
         public function deleteProduct($id) {
-            $sql = "DELETE FROM product
-                    WHERE product_id = :product_id";
+            if($_SESSION['admin']) {
+                $sql = "DELETE FROM product
+                        WHERE product_id = :product_id";
+            } else {
+                $userId = $_SESSION['user']['user_id'] ?? null;
+                if(!$userId) {
+                    header("Location: /products");
+                    exit();
+                }
+                $sql = "DELETE FROM product
+                        WHERE product_id = :product_id
+                        AND id_product_user = :id_product_user";
+            }            
             $stmt = $this->conn->prepare($sql);
             $stmt->bindValue(":product_id", $id);
+            if($userId) {
+                $stmt->bindValue(":id_product_user", $userId);
+            }            
             $stmt->execute();
         }
 

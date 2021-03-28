@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <title><?= $title ?? "GameMarket" ?></title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <title><?= $title ?? "GameXChange" ?></title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-md mb-5 navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">GameMarket</a>
-        <span class="text-white"><?= $_SESSION['user']['user_fname'] ?? "" ?></span>
+    <nav class="navbar navbar-expand-md mb-5">
+        <a class="navbar-brand" href="/">GameXChange</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -28,7 +28,7 @@
                     My products
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownUserProducts">
-                    <a class="dropdown-item" href="#">My products</a>
+                    <a class="dropdown-item" href="/products/user">My products</a>
                     <a class="dropdown-item" href="/products/create">Add a product</a>
                 </div>
             </li>
@@ -41,28 +41,28 @@
                     Management
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownManagement">
-                    <a class="dropdown-item" href="#">Products</a>
-                    <a class="dropdown-item" href="#">Users</a>
-                    <a class="dropdown-item" href="#">Admins</a>
-                    <a class="dropdown-item" href="#">Categories</a>
+                    <a class="dropdown-item" href="/products/management">Products</a>
+                    <a class="dropdown-item" href="/user/management">Users</a>
+                    <a class="dropdown-item" href="/admin/management">Admins</a>
+                    <a class="dropdown-item" href="/category/management">Categories</a>
                 </div>
             </li>
             <?php
                 }
-                if (!isset($_SESSION['user'])) {
+                if (!isset($_SESSION['user']) && !isset($_SESSION['admin'])) {
             ?>
             <li class="nav-item">
                 <a class="nav-link" href="/user/login">Login</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Register</a>
+                <a class="nav-link" href="/user/signup">Register</a>
             </li>
             <?php 
                 }
-                if (isset($_SESSION['user'])) {
+                if (isset($_SESSION['user']) || isset($_SESSION['admin'])) {
             ?>
              <li class="nav-item">
-                <a class="nav-link" href="/user">Account</a>
+                <a class="nav-link" href="<?= isset($_SESSION['admin']) ? "/admin" : "/user" ;?>">Account</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/logout">Logout</a>

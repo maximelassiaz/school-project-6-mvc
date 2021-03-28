@@ -1,4 +1,4 @@
-<h1 class="text-center">Login</h1>
+<h1 class="text-center">Log in as administrator</h1>
 
 <?php 
     if(isset($errors)) {
@@ -16,5 +16,4 @@
         <input type="password" class="form-control" id="login-password" name="login-password">
     </div>
     <button type="submit" class="btn">Login</button> <br>
-    <a href="/admin/login">Log as administrator</a>
 </form>

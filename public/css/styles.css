@@ -1,0 +1,85 @@
+:root {
+    --primary:  #FFFFFF;
+    --secondary: #DE2827;
+    --ternary : #E34847;
+    --text: #2F3948;
+    --textSecondary: #6B727C;
+    --button: #45689C;
+    --buttonHover: #233652;
+    --danger: #E34847;
+    --dangerHover: #ad1c1c;
+    --warning: #df8f27;
+    --warningHover: #a17921;
+}
+
+body {
+    background: #F2F2F2;
+    color: var(--text);
+}
+
+/* Navbar */
+
+nav {
+    background: var(--secondary);
+}
+
+nav a {
+    color: var(--primary);
+}
+
+.navbar a:hover {
+    color: var(--text);
+    text-decoration: underline var(--text);
+}
+
+/* Form */
+
+form {
+    background: var(--primary);
+}
+
+form label {
+    color: var(--textSecondary);
+}
+
+.form-search {
+    background: var(--ternary);
+}
+
+/* Button */
+
+.btn {
+    background: var(--button);
+    color: var(--primary);
+}
+
+.btn:hover {
+    background: var(--buttonHover);
+    color: var(--primary);
+}
+
+.btn.danger {
+    background: var(--danger);
+}
+
+.btn.danger:hover {
+    background: var(--dangerHover);
+}
+
+.btn.warning {
+    background: var(--warning);
+}
+
+.btn.warning:hover {
+    background: var(--warningHover);
+}
+
+/* Table */
+
+table {
+    background: var(--primary);
+}
+
+table th, table tr {
+    color: var(--textSecondary);
+}
