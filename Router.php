@@ -2,31 +2,34 @@
 
     namespace app;
 
-    use app\models\Database;
     use app\models\ProductManager;
     use app\models\UserManager;
     use app\models\AdminManager;
     use app\models\CategoryManager;
     use app\models\RegionManager;
+    use app\models\Mailing;
+    use app\models\ExportToPdf;
 
     class Router {
 
         public array $getRoutes = [];
         public array $postRoutes = [];
-        public Database $db;
         public ProductManager $productManager;
         public UserManager $userManager;
         public AdminManager $adminManager;
         public CategoryManager $categoryManager;
         public RegionManager $regionManager;
+        public Mailing $mailing;
+        public ExportToPdf $exportToPdf;
 
         public function __construct() {
-            $this->db = new Database();
             $this->productManager = new ProductManager();
             $this->userManager = new UserManager();
             $this->adminManager = new AdminManager();
             $this->categoryManager = new CategoryManager();
             $this->regionManager = new RegionManager();
+            $this->mailing = new Mailing();
+            $this->exportToPdf = new ExportToPdf();
         }
 
         public function get($url, $fn) {

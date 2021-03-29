@@ -10,6 +10,10 @@
 
         public static function home(Router $router) {
             $id = $_SESSION['user']['user_id']; 
+            if (!$id) {
+                header("Location: /products");
+                exit();
+            }
             $user = $router->userManager->getUserById($id);
             $router->renderView('users/home', [
                 'user' => $user
@@ -17,6 +21,11 @@
         }
 
         public static function management(Router $router) {
+            $id = $_SESSION['admin']['admin_id']; 
+            if (!$id) {
+                header("Location: /products");
+                exit();
+            }
             $search = $_GET['search'] ?? "";
             $users = $router->userManager->getUsers($search);
             $router->renderView('users/management', [
@@ -47,8 +56,7 @@
                 $user->load($userData);
                 $errors = $user->save();
                 if (empty($errors)) {
-                    header('Location: /products');
-                    exit();
+                    $router->mailing->registration($user->fname, $user->lname, $user->email);
                 }    
 
             }

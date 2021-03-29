@@ -4,7 +4,7 @@
     
     use PDO;
 
-    class Database {
+    abstract class Database {
 
         public \PDO $conn;
         public static Database $db;
@@ -16,5 +16,4 @@
 
             self::$db = $this;
         }
-
     }

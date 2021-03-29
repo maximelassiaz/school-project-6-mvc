@@ -9,9 +9,11 @@
 
         public static function home(Router $router) {
             $search = $_GET['search'] ?? "";
-            $products = $router->productManager->getProducts($search);
-            $regions = $router->regionManager->getRegions();
+            $category = $_GET['category'] ?? "";
+            $region = $_GET['region'] ?? "";
+            $products = $router->productManager->getProducts($search, $category, $region);
             $categories = $router->categoryManager->getCategories();
+            $regions = $router->regionManager->getRegions();
             $router->renderView('products/home', [
                 'products' => $products,
                 'search' => $search,
@@ -33,11 +35,22 @@
         }
 
         public static function management(Router $router) {
+            $id = $_SESSION['admin']['admin_id']; 
+            if (!$id) {
+                header("Location: /products");
+                exit();
+            }
             $search = $_GET['search'] ?? "";
-            $products = $router->productManager->getProducts($search);
+            $category = $_GET['category'] ?? "";
+            $region = $_GET['region'] ?? "";
+            $products = $router->productManager->getProducts($search, $category, $region);
+            $categories = $router->categoryManager->getCategories();
+            $regions = $router->regionManager->getRegions();
             $router->renderView('products/management', [
                 'products' => $products,
-                'search' => $search
+                'search' => $search,
+                "categories" => $categories,
+                "regions" => $regions
             ]);
         }
 
@@ -48,8 +61,44 @@
                 exit();
             }
             $product = $router->productManager->getProductById($id);
+            if ($_SERVER['REQUEST_METHOD'] === "POST") {
+                if(!isset($_POST['export-submit'])) {
+                    header("Location: /products");
+                    exit();
+                }
+                $router->exportToPdf->export($product);
+            }
             $router->renderView('products/details', [
-                'product' => $product,
+                'product' => $product
+            ]);
+        }
+
+        public static function contact(Router $router) {
+            $idClient = $_SESSION['user']['user_id'] ?? null;
+            if (!$idClient) {
+                header('Location: /products');
+                exit();
+            }
+            $id = $_GET['id'] ?? null;
+            if (!$id) {
+                header('Location: /products');
+                exit();
+            }
+            $product = $router->productManager->getProductById($id);
+            if ($_SERVER['REQUEST_METHOD'] === "POST") {
+                $fnameSender = $_SESSION['user']['user_fname'];
+                $lnameSender = $_SESSION['user']['user_lname'];
+                $emailSender = $_SESSION['user']['user_email'];
+                $fnameReceiver = $product['user_fname'];
+                $lnameReceiver = $product['user_lname'];
+                $emailReceiver = $product['user_email'];
+                $subject = $_POST['message-subject'];
+                $content = $_POST['message-content'];
+
+                $router->mailing->contact($fnameSender, $lnameSender, $emailSender, $fnameReceiver, $lnameReceiver, $emailReceiver, $subject, $content, $id);
+            }
+            $router->renderView('products/contact', [
+                'product' => $product
             ]);
         }
 
@@ -60,17 +109,14 @@
                 exit();
             }
             $errors = [];
-            // TODO : send minimum amount of info, remove name
             $productData = [
                 'product_title' => '',
                 'product_description' => '',
                 'product_image' => '',
                 'product_imageFile' => '',
                 'product_price' => '',
-                'product_category_name' => '',
-                'product_category_id' => '',
-                'product_region_name' => '',
-                'product_region_id' => ''
+                'category_id' => '',
+                'region_id' => ''
             ];
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $productData['product_title'] = $_POST['product-title'];
@@ -121,6 +167,38 @@
             $router->renderView('products/update', [
                 'product' => $productData,
                 'errors' => $errors
+            ]);
+        }
+
+        public static function buy(Router $router) {
+            $idClient = $_SESSION['user']['user_id'] ?? null;
+            if (!$idClient) {
+                header('Location: /products');
+                exit();
+            }
+            $id = $_GET['id'] ?? null;
+            if (!$id) {
+                header('Location: /products');
+                exit();
+            }
+            $product = $router->productManager->getProductById($id);
+            if ($_SERVER['REQUEST_METHOD'] === "POST") {
+                $fnameClient = $_SESSION['user']['user_fname'];
+                $lnameClient = $_SESSION['user']['user_lname'];
+                $emailClient = $_SESSION['user']['user_email'];
+                $usernameClient = $_SESSION['user']['user_username'];
+                $fnameSeller = $product['user_fname'];
+                $lnameSeller = $product['user_lname'];
+                $emailSeller = $product['user_email'];
+                $usernameSeller = $product['user_username'];
+                $router->mailing->buySeller($fnameSeller, $lnameSeller, $emailSeller, $usernameSeller, $usernameClient, $product);
+                $router->mailing->buyClient($fnameClient, $lnameClient, $emailClient, $usernameClient, $usernameSeller, $product);
+                $router->productManager->buyProduct($id);
+                header("Location: /products");
+                exit();
+            }
+            $router->renderView('products/buy', [
+                'product' => $product
             ]);
         }
 

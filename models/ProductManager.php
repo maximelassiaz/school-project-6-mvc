@@ -17,16 +17,35 @@
         }
 
          // get all products matching the search expression, or all products if no search is made
-         public function getProducts($search = []) {
+         public function getProducts($search = "", $category = "", $region = "") {
+            $query = [];
             if ($search) {
+                $query[] = " product_title LIKE :search ";
+            }
+            if ($category) {
+                $query[] = " id_product_category = :id_product_category ";
+            }
+            if ($region) {
+                $query[] = " id_product_region = :id_product_region ";
+            }
+            if ($query) {
+                $sqlQuery = implode(" AND ", $query);
                 $sql = "SELECT * FROM product
                         INNER JOIN category ON product.id_product_category = category.category_id
                         INNER JOIN region ON product.id_product_region = region.region_id
                         INNER JOIN user ON product.id_product_user = user.user_id
-                        WHERE product_title LIKE :search
+                        WHERE $sqlQuery
                         ORDER BY product_id DESC";
                 $stmt = $this->conn->prepare($sql);
-                $stmt->bindValue(":search", "%$search%", PDO::PARAM_STR);
+                if ($search) {
+                    $stmt->bindValue(":search", "%$search%");
+                }
+                if ($category) {
+                    $stmt->bindValue(":id_product_category", $category);
+                }
+                if ($region) {
+                    $stmt->bindValue("id_product_region", $region);
+                }                
             } else {
                 $sql = "SELECT * FROM product
                 INNER JOIN category ON product.id_product_category = category.category_id
@@ -138,4 +157,16 @@
             $stmt->execute();
         }
 
+        public function buyProduct($id) {
+            $userId = $_SESSION['user']['user_id'] ?? null;
+            if(!$userId) {
+                header("Location: /products");
+                exit();
+            }
+            $sql = "DELETE FROM product
+                    WHERE product_id = :product_id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindValue(":product_id", $id);         
+            $stmt->execute();
+        }
     }

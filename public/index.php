@@ -18,6 +18,11 @@
     $router->get('/products/home', [ProductController::class, 'home']);
     $router->get('/products/management', [ProductController::class, 'management']);
     $router->get('/products/details', [ProductController::class, 'details']);
+    $router->post('/products/details', [ProductController::class, 'details']);
+    $router->get('/products/contact', [ProductController::class, 'contact']);
+    $router->post('/products/contact', [ProductController::class, 'contact']);
+    $router->get('/products/buy', [ProductController::class, 'buy']);
+    $router->post('/products/buy', [ProductController::class, 'buy']);
     $router->get('/products/user', [ProductController::class, 'user']);
     $router->get('/products/create', [ProductController::class, 'create']);
     $router->post('/products/create', [ProductController::class, 'create']);

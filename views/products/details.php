@@ -1,12 +1,11 @@
 <?php
     if (!$product) {
-        header("Location: home");
+        header("Location: /home");
         exit();
     }
 ?>
 
 <h1 class="text-center"><?= htmlspecialchars($product['product_title']) ;?></h1>
-
 
 <div class="container mt-5">
     <div class="row">
@@ -45,10 +44,34 @@
                         <th scope="row">Seller</th>
                         <td><?= htmlspecialchars($product['user_username']) ;?></td>
                     </tr>
+                    <?php
+                        if (isset($_SESSION['user'])) {
+                    ?>
+                    <tr>
+                        <th scope="row">Contact Seller</th>
+                        <td>
+                            <a class="btn" href="/products/contact?id=<?= htmlspecialchars($product['product_id'])?>" role="button">Contact</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Buy</th>
+                        <td>
+                            <a class="btn" href="/products/buy?id=<?= htmlspecialchars($product['product_id'])?>" role="button">Buy</a>
+                        </td>
+                    </tr> 
+                    <tr>
+                        <th scope="row">Export to PDF</th>
+                        <td>
+                            <form method="POST">
+                                <button class="btn" type="submit" name="export-submit">Export to PDF</button>
+                            </form>
+                        </td>
+                    </tr>   
+                    <?php
+                        }
+                    ?>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-
-
