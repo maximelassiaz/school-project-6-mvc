@@ -1,6 +1,6 @@
 <h1 class="text-center">My products</h1>
 
-<table class="table w-75 mt-5 mx-auto">
+<table class="table table-responsive w-75 mt-5 mx-auto">
     <thead>
         <tr>
             <th scope="col">Title</th>

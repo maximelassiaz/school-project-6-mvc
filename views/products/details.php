@@ -9,10 +9,10 @@
 
 <div class="container mt-5">
     <div class="row">
-        <div class="col">
+        <div class="col-md-6">
             <img src="/product_image/<?= htmlspecialchars($product['product_image'])?>" class="img-fluid" alt="">
         </div>
-        <div class="col">
+        <div class="col-md-6">
             <table class="table">
                 <thead>
                     <tr>

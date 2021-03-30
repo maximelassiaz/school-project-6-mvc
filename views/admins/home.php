@@ -19,6 +19,6 @@
 </table>
 
 <div class="text-center">
-    <a class="btn warning" href="/admin/update?id=<?= htmlspecialchars($admin['admin_id']) ?>" role="button">Edit account informations</a>
-    <a class="btn danger" href="/admin/delete?id=<?= htmlspecialchars($admin['admin_id']) ?>" role="button">Delete my account</a>
+    <a class="btn warning m-2" href="/admin/update?id=<?= htmlspecialchars($admin['admin_id']) ?>" role="button">Edit account informations</a>
+    <a class="btn danger m-2" href="/admin/delete?id=<?= htmlspecialchars($admin['admin_id']) ?>" role="button">Delete my account</a>
 </div>

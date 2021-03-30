@@ -1,8 +1,8 @@
 <h1 class="text-center">Products Management</h1>
 
 <form class="form-inline form-search justify-content-center mt-5 w-50 mx-auto">
-    <input type="text" name="search" class="form-control my-2 mr-sm-2" placeholder="Search" value="<?php echo $search ?>">
-    <select class="form-control my-2 mr-sm-2" id="category" name="category">
+    <input type="text" name="search" class="form-control m-2 mr-sm-2" placeholder="Search" value="<?php echo $search ?>">
+    <select class="form-control m-2 mr-sm-2" id="category" name="category">
                 <option value="">Select a category</option>
                 <?php
                     foreach ($categories as $c) {
@@ -12,7 +12,7 @@
                     }
                 ?>
     </select>
-    <select class="form-control my-2 mr-sm-2" id="region" name="region">
+    <select class="form-control m-2 mr-sm-2" id="region" name="region">
                 <option value="">Select a region</option>
                 <?php
                     foreach ($regions as $r) {
@@ -22,11 +22,11 @@
                     }
                 ?>
     </select>
-    <button class="btn my-2 mr-sm-2" type="submit">Search</button>
-    <a class="btn my-2 mr-sm-2" href="/products" role="button">Reset</a>
+    <button class="btn m-2 mr-sm-2" type="submit">Search</button>
+    <a class="btn m-2 mr-sm-2" href="/products" role="button">Reset</a>
 </form>
 
-<table class="table mt-5">
+<table class="table table-responsive mt-5">
     <thead>
         <tr>
             <th scope="col">#</th>

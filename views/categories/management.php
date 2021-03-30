@@ -2,7 +2,7 @@
 
 <a class="btn m-3" href="/category/create" role="button">Create new category</a>
 
-<table class="table w-50 mx-auto">
+<table class="table table-responsive">
     <thead>
         <tr>
             <th scope="col">#</th>

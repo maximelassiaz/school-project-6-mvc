@@ -27,6 +27,6 @@
 </table>
 
 <div class="text-center">
-    <a class="btn warning" href="/user/update" role="button">Edit account informations</a>
-    <a class="btn danger" href="/user/delete" role="button">Delete my account</a>
+    <a class="btn warning m-2" href="/user/update" role="button">Edit account informations</a>
+    <a class="btn danger m-2" href="/user/delete" role="button">Delete my account</a>
 </div>

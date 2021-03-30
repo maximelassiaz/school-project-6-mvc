@@ -16,7 +16,7 @@
 
 <div class="container mt-5">
     <div class="row">
-        <div class="col">
+        <div class="col-md-6">
             <form method="POST" class="p-3" enctype="multipart/form-data">
             <?php
                 if ($product['product_image']) {
@@ -76,7 +76,7 @@
                 <button type="submit" name="product-submit" class="btn btn-primary ml-5"><?= $path ;?></button>
             </form>
         </div>
-        <div class="col">
+        <div class="col-md-6">
             <img id="imgDisplay" class="img-fluid" src="">
         </div>
     </div>
