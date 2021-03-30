@@ -1,6 +1,5 @@
 <h1 class="text-center">Users Management</h1>
 
-<!-- TODO add category and region selection -->
 <form action="" method="get">
     <div class="input-group mb-3">
         <input type="text" name="search" class="form-control" placeholder="Search" value="<?php echo $search ?>">

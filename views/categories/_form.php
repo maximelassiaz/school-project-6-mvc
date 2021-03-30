@@ -1,11 +1,18 @@
-
-<?php if (!empty($errors)) { ?>
-   <div class="alert alert-danger">
-        <?php foreach ($errors as $error) { ?>
-           <div><?= $error ?></div>
-        <?php } ?>
+<?php 
+    if (!empty($errors)){ 
+?>
+<div class="alert alert-danger text-center w-50 mx-auto mt-5">
+    <?php 
+        foreach ($errors as $error){
+    ?>
+         <div><?= $error ?></div>
+    <?php
+        } 
+    ?>
    </div>
-<?php } ?>
+<?php 
+    }
+?>
 
 <form method="POST" class="w-50 mx-auto p-3 mt-5">
     <div class="form-group">

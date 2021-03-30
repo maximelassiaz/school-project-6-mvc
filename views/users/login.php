@@ -1,8 +1,18 @@
 <h1 class="text-center">Login</h1>
 
 <?php 
-    if(isset($errors)) {
-        print_r($errors);
+    if (!empty($errors)){ 
+?>
+<div class="alert alert-danger text-center w-50 mx-auto mt-5">
+    <?php 
+        foreach ($errors as $error){
+    ?>
+         <div><?= $error ?></div>
+    <?php
+        } 
+    ?>
+   </div>
+<?php 
     }
 ?>
 

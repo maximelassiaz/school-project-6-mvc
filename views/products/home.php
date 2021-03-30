@@ -33,7 +33,7 @@
     <div class="col mb-4">
         <div class="card" style="width: 18rem;">
             <div class="card-body">
-                <h4 class="card-title"><?= htmlspecialchars($p['product_title']) ;?></h4>
+                <h4 class="card-title text-center"><?= htmlspecialchars($p['product_title']) ;?></h4>
             </div>
             <img src="/product_image/<?= htmlspecialchars($p['product_image']) ;?>" class="card-img-top" alt="...">
             <ul class="list-group list-group-flush">

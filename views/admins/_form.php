@@ -1,4 +1,20 @@
-<form method="POST" class="mx-5 mt-3 mx-auto p-3 w-50">
+<?php 
+    if (!empty($errors)){ 
+?>
+<div class="alert alert-danger text-center w-50 mx-auto mt-5">
+    <?php 
+        foreach ($errors as $error){
+    ?>
+         <div><?= $error ?></div>
+    <?php
+        } 
+    ?>
+   </div>
+<?php 
+    }
+?>
+
+<form method="POST" class="mx-5 mt-3 mx-auto p-3 mt-5 w-50">
     <div class="form-group">
         <label for="admin-username">Username</label>
         <input type="text" class="form-control" id="admin-username" name="admin-username" value="<?= isset($admin) ? htmlspecialchars($admin['admin_username']) : "";?>">

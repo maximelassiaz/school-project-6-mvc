@@ -1,3 +1,19 @@
+<?php 
+    if (!empty($errors)){ 
+?>
+<div class="alert alert-danger text-center w-50 mx-auto mt-5">
+    <?php 
+        foreach ($errors as $error){
+    ?>
+         <div><?= $error ?></div>
+    <?php
+        } 
+    ?>
+   </div>
+<?php 
+    }
+?>
+
 <form method="POST" class="mx-5 mt-3 mx-auto p-3 w-50">
     <div class="form-group">
         <label for="user-username">Username</label>

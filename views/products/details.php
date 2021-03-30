@@ -45,7 +45,7 @@
                         <td><?= htmlspecialchars($product['user_username']) ;?></td>
                     </tr>
                     <?php
-                        if (isset($_SESSION['user'])) {
+                        if (isset($_SESSION['user']) && $_SESSION['user']['user_id'] != $product['user_id']) {
                     ?>
                     <tr>
                         <th scope="row">Contact Seller</th>
