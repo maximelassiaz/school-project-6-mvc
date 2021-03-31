@@ -1,3 +1,7 @@
+<?php
+    $title = "GameXChange - Edit category";
+?>
+
 <h1 class="text-center">Edit product</h1>
 
 <?php

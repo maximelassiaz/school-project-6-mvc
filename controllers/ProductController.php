@@ -11,14 +11,28 @@
             $search = $_GET['search'] ?? "";
             $category = $_GET['category'] ?? "";
             $region = $_GET['region'] ?? "";
-            $products = $router->productManager->getProducts($search, $category, $region);
+
+            // pagination
+            if (isset($_GET['page'])) {
+                $page = $_GET['page'];
+            } else {
+                $page = 1;
+            }
+            $no_of_records_per_page = 8;
+            $offset = ($page - 1) * $no_of_records_per_page;
+            $total_rows = $router->productManager->countProducts($search, $category, $region)[0];
+            $total_pages = ceil($total_rows / $no_of_records_per_page);
+            
+            $products = $router->productManager->getProducts($search, $category, $region, $offset, $no_of_records_per_page);
             $categories = $router->categoryManager->getCategories();
             $regions = $router->regionManager->getRegions();
             $router->renderView('products/home', [
                 'products' => $products,
                 'search' => $search,
                 'categories' => $categories,
-                'regions' => $regions
+                'regions' => $regions,
+                'page' => $page,
+                'total_pages' => $total_pages
             ]);
         }
 
@@ -40,17 +54,32 @@
                 header("Location: /products");
                 exit();
             }
+
             $search = $_GET['search'] ?? "";
             $category = $_GET['category'] ?? "";
             $region = $_GET['region'] ?? "";
-            $products = $router->productManager->getProducts($search, $category, $region);
+
+            // pagination
+            if (isset($_GET['page'])) {
+                $page = $_GET['page'];
+            } else {
+                $page = 1;
+            }
+            $no_of_records_per_page = 8;
+            $offset = ($page - 1) * $no_of_records_per_page;
+            $total_rows = $router->productManager->countProducts($search, $category, $region)[0];
+            $total_pages = ceil($total_rows / $no_of_records_per_page);
+
+            $products = $router->productManager->getProducts($search, $category, $region, $offset, $no_of_records_per_page);
             $categories = $router->categoryManager->getCategories();
             $regions = $router->regionManager->getRegions();
             $router->renderView('products/management', [
                 'products' => $products,
                 'search' => $search,
                 "categories" => $categories,
-                "regions" => $regions
+                "regions" => $regions,
+                'page' => $page,
+                'total_pages' => $total_pages
             ]);
         }
 
@@ -118,6 +147,10 @@
                 'category_id' => '',
                 'region_id' => ''
             ];
+
+            $categories = $router->categoryManager->getCategories();
+            $regions = $router->regionManager->getRegions();
+
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $productData['product_title'] = $_POST['product-title'];
                 $productData['product_description'] = $_POST['product-description'];                
@@ -138,7 +171,9 @@
             }
             $router->renderView('products/create', [
                 'product' => $productData,
-                'errors' => $errors
+                'errors' => $errors,
+                'regions' => $regions,
+                'categories' => $categories
             ]);
         }
 
@@ -149,6 +184,8 @@
                 exit();
             }
             $errors = [];
+            $categories = $router->categoryManager->getCategories();
+            $regions = $router->regionManager->getRegions();
             $productData = $router->productManager->getProductbyId($id);
             if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 $productData['product_title'] = $_POST['product-title'];
@@ -166,7 +203,9 @@
             }
             $router->renderView('products/update', [
                 'product' => $productData,
-                'errors' => $errors
+                'errors' => $errors,
+                'regions' => $regions,
+                'categories' => $categories
             ]);
         }
 

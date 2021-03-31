@@ -1,3 +1,7 @@
+<?php
+    $title = "GameXChange - Contact";
+?>
+
 <h1 class="text-center">Contact</h1>
 
 <div class="container mt-5">

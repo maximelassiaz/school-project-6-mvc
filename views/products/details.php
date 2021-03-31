@@ -1,4 +1,8 @@
 <?php
+    $title = "GameXChange - " . $product['product_title'];
+?>
+
+<?php
     if (!$product) {
         header("Location: /home");
         exit();

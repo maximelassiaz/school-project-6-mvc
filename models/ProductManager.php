@@ -17,7 +17,7 @@
         }
 
          // get all products matching the search expression, or all products if no search is made
-         public function getProducts($search = "", $category = "", $region = "") {
+         public function getProducts($search = "", $category = "", $region = "", $offset = "", $no_of_record_per_page = "") {
             $query = [];
             if ($search) {
                 $query[] = " product_title LIKE :search ";
@@ -28,6 +28,7 @@
             if ($region) {
                 $query[] = " id_product_region = :id_product_region ";
             }
+            $limit = isset($offset) && isset($no_of_record_per_page) ? " LIMIT $no_of_record_per_page OFFSET $offset " : "";
             if ($query) {
                 $sqlQuery = implode(" AND ", $query);
                 $sql = "SELECT * FROM product
@@ -35,7 +36,8 @@
                         INNER JOIN region ON product.id_product_region = region.region_id
                         INNER JOIN user ON product.id_product_user = user.user_id
                         WHERE $sqlQuery
-                        ORDER BY product_id DESC";
+                        ORDER BY product_id DESC
+                        $limit";
                 $stmt = $this->conn->prepare($sql);
                 if ($search) {
                     $stmt->bindValue(":search", "%$search%");
@@ -51,12 +53,48 @@
                 INNER JOIN category ON product.id_product_category = category.category_id
                 INNER JOIN region ON product.id_product_region = region.region_id
                 INNER JOIN user ON product.id_product_user = user.user_id
-                ORDER BY product_id DESC";
+                ORDER BY product_id DESC
+                $limit";
                 $stmt = $this->conn->prepare($sql);
             }
             $stmt->execute();
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+         // get all products matching the search expression, or all products if no search is made
+         public function countProducts($search = "", $category = "", $region = "") {
+            $query = [];
+            if ($search) {
+                $query[] = " product_title LIKE :search ";
+            }
+            if ($category) {
+                $query[] = " id_product_category = :id_product_category ";
+            }
+            if ($region) {
+                $query[] = " id_product_region = :id_product_region ";
+            }
+            if ($query) {
+                $sqlQuery = implode(" AND ", $query);
+                $sql = "SELECT COUNT(*) FROM product
+                        WHERE $sqlQuery";
+                $stmt = $this->conn->prepare($sql);
+                if ($search) {
+                    $stmt->bindValue(":search", "%$search%");
+                }
+                if ($category) {
+                    $stmt->bindValue(":id_product_category", $category);
+                }
+                if ($region) {
+                    $stmt->bindValue("id_product_region", $region);
+                }                
+            } else {
+                $sql = "SELECT COUNT(*) FROM product";
+                $stmt = $this->conn->prepare($sql);
+            }
+            $stmt->execute();
+
+            return $stmt->fetch();
         }
 
         public function getProductById($id) {

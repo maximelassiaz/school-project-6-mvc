@@ -1,3 +1,7 @@
+<?php
+    $title = "GameXChange - Products exchanged";
+?>
+
 <h1 class="text-center">Games currently exchanged</h1>
 
 <form class="form-inline form-search justify-content-center mt-5 w-50 mx-auto">
@@ -56,5 +60,25 @@
         }
     ?>
 </div>
+
+<?php
+    $path = "";
+
+?>
+
+<ul class="pagination w-25 mx-auto">
+    <li>
+        <a href="products?page=1">First</a>
+    </li>
+    <li class="<?= $page <= 1 ? 'disabled' : '' ?>">
+        <a href="products<?= $page <= 1 ? '' : "?page=". ($page - 1) ?>">Prev</a>
+    </li>
+    <li class="<?= $page >= $total_pages ? 'disabled' : '' ?>">
+        <a href="products<?= $page >= $total_pages ? '' : "?page=".($page + 1) ?>">Next</a>
+    </li>
+    <li>
+        <a href="products?page=<?= $total_pages; ?>">Last</a>
+    </li>
+</ul>
 
 

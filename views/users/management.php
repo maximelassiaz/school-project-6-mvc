@@ -1,3 +1,7 @@
+<?php
+    $title = "GameXChange - Users management";
+?>
+
 <h1 class="text-center">Users Management</h1>
 
 <form action="" method="get">
@@ -9,7 +13,7 @@
     </div>
 </form>
 
-<table class="table">
+<table class="table table-responsive-md">
     <thead>
         <tr>
             <th scope="col">#</th>

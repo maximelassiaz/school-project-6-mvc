@@ -1,3 +1,7 @@
+<?php
+    $title = "GameXChange - Update profile";
+?>
+
 <h1 class="text-center">Update account</h1>
 
 <?php

@@ -1,3 +1,7 @@
+<?php
+    $title = "GameXChange - Log as administrator";
+?>
+
 <h1 class="text-center">Log in as administrator</h1>
 
 <?php 

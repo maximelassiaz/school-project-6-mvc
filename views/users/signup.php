@@ -1,3 +1,7 @@
+<?php
+    $title = "GameXChange - Register";
+?>
+
 <h1 class="text-center">Register</h1>
 
 <?php

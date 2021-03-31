@@ -1,3 +1,7 @@
+<?php
+    $title = "GameXChange - Products management";
+?>
+
 <h1 class="text-center">Products Management</h1>
 
 <form class="form-inline form-search justify-content-center mt-5 w-50 mx-auto">
@@ -26,7 +30,7 @@
     <a class="btn m-2 mr-sm-2" href="/products" role="button">Reset</a>
 </form>
 
-<table class="table table-responsive mt-5">
+<table class="table table-responsive-md mt-5">
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -62,3 +66,17 @@
     </tbody>
 </table>
 
+<ul class="pagination w-25 mx-auto">
+    <li>
+        <a href="management?page=1">First</a>
+    </li>
+    <li class="<?= $page <= 1 ? 'disabled' : '' ?>">
+        <a href="management<?= $page <= 1 ? '' : "?page=". ($page - 1) ?>">Prev</a>
+    </li>
+    <li class="<?= $page >= $total_pages ? 'disabled' : '' ?>">
+        <a href="management<?= $page >= $total_pages ? '' : "?page=".($page + 1) ?>">Next</a>
+    </li>
+    <li>
+        <a href="management?page=<?= $total_pages; ?>">Last</a>
+    </li>
+</ul>

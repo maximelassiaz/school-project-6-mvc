@@ -1,3 +1,7 @@
+<?php
+    $title = "GameXChange - My profile";
+?>
+
 <h1 class="text-center">Your account</h1>
 
 <table class="table w-50 mx-auto mt-5">

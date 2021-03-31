@@ -1,3 +1,7 @@
+<?php
+    $title = "GameXChange - Purchase";
+?>
+
 <h1 class="text-center">Purchase : <?= htmlspecialchars($product['product_title']) ;?></h1>
 
 <form method="POST" class="text-center w-25 mx-auto p-2 mt-5">

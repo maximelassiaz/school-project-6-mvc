@@ -1,3 +1,7 @@
+<?php
+    $title = "GameXChange - Delete profile";
+?>
+
 <h1 class="text-center">Delete account</h1>
 
 <div class="mx-auto w-50 mt-5 text-center">

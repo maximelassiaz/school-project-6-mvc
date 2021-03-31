@@ -1,3 +1,7 @@
+<?php
+    $title = "GameXChange - Categories management";
+?>
+
 <h1 class="text-center">Categories Management</h1>
 
 <a class="btn m-3" href="/category/create" role="button">Create new category</a>

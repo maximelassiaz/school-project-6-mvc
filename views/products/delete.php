@@ -1,3 +1,7 @@
+<?php
+    $title = "GameXChange - Delete product";
+?>
+
 <h1 class="text-center">Delete product</h1>
 
 <div class="mx-auto w-50 mt-5 text-center">

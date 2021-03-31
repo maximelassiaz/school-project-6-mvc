@@ -86,3 +86,13 @@ table {
 table th, table tr {
     color: var(--textSecondary);
 }
+
+/* Pagination links */
+
+.pagination li {
+    margin: auto;
+}
+
+.pagination li a {
+    padding: 20px;
+}

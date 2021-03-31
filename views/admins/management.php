@@ -1,3 +1,7 @@
+<?php
+    $title = "GameXChange - Administrators management";
+?>
+
 <h1 class="text-center">Admins Management</h1>
 
 <!-- TODO add category and region selection -->
