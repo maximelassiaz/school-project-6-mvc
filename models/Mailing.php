@@ -44,12 +44,12 @@
         public function contact($fnameSender, $lnameSender, $emailSender, $fnameReceiver, $lnameReceiver, $emailReceiver, $subject, $content, $id) {
             $mail = new PHPMailer();
             $mail->isSMTP();
-            $mail->Host = 'smtp.mailtrap.io';
+            $mail->Host = '';
             $mail->SMTPAuth = true;
-            $mail->Username = 'd8a6e9b9a5fd9b'; 
-            $mail->Password = '087e03c8669b5d'; 
+            $mail->Username = ''; 
+            $mail->Password = ''; 
             $mail->SMTPSecure = 'tls';
-            $mail->Port = 2525;
+            $mail->Port = '';
             $mail->setFrom($emailSender, $fnameSender . ' ' . $lnameSender);
             $mail->addReplyTo($emailSender, $fnameSender . ' ' . $lnameSender);
             $mail->addAddress($emailReceiver, $fnameReceiver . ' ' . $lnameReceiver);
