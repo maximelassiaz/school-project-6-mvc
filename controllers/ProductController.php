@@ -248,6 +248,9 @@
                     header("Location: /products");
                     exit();
                 }
+                $product = $router->productManager->getProductById($id);
+                $pathDelete = "product_image/" . $product['product_image'];
+                unlink($pathDelete);
                 $router->productManager->deleteProduct($id);
                 header("Location: /products/user?delete=success");
                 exit();
